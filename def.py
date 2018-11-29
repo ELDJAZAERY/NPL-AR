@@ -16,6 +16,24 @@ from bs4 import BeautifulSoup
 url = 'https://www.almaany.com/ar/dict/ar-ar/';
 path = 'XMLDIC/';
 
+
+
+### ----- Check Connection internet ------- ###
+import socket
+def internet():
+    try:
+        socket.create_connection(("www.google.com", 80))
+        return True
+    except OSError:
+        pass
+    return False
+
+internet_enable = internet();
+
+
+
+
+### --------- < On Line Traitement >
 def definition(word):
     r = requests.get(url+word)
 
@@ -108,6 +126,7 @@ def dicOnLine(word):
     relativeWordsonLine = relativeWords(word)
     nearWordsOnLine = nearWords(word)
     dicOnLine = {
+        'connexion'     : internet_enable,
         'definition'    : definitiononline ,
         'relativeWords' : relativeWordsonLine,
         'nearWords'     : nearWordsOnLine
@@ -115,52 +134,32 @@ def dicOnLine(word):
     return dicOnLine;
 
 
-import socket
-def internet():
-    try:
-        socket.create_connection(("www.google.com", 80))
-        return True
-    except OSError:
-        pass
-    return False
+### --------- </On Line Traitement>
 
 
 
-### ------------ OfLine Part ---------- ### 
-
+### --------- <OFF Line Traitement>
 
 def dicOffLine(word):
-    definitiOFFonline      = '' ##definitionOFFLine(word)
-    relativeWordsOFFLine   = '' ##relativeWordsOFFLine(word)
-    nearWordsOFFLine       = '' ##nearWordsOFFLine(word)
-    dicOFFLine = {
-        'definition'    : definitiOFFonline ,
-        'relativeWords' : relativeWordsOFFLine,
-        'nearWords'     : nearWordsOFFLine
-    };
-    return dicOFFLine;
+    import sqlLite
+    return sqlLite.dicOffLine(word);
 
-import xml.etree.ElementTree
-def definitionOFFLine(word):
-    e = xml.etree.ElementTree.parse('ArDict.xml').getroot()
-    print(e);
-
-def relativeWordsOFFLine(word):
-    print("");
-
-def nearWordsOFFLine(word):
-    print("");
+### --------- </OFF Line Traitement>
 
 
-### ------------ main Part ---------- ### 
+
+
+### ------------ main Function ---------- ### 
 
 def DicOnOFF(word):
-    try:
-        internet()
+    if(internet_enable):
         return dicOnLine(word);
-    except:
+    else:
         return dicOffLine(word);
+    
 
 
-word = 'اكل';
-definitionOFFLine(word);
+word = 'دخداخ';
+print(DicOnOFF(word));
+
+### ------------ main Function ---------- ### 

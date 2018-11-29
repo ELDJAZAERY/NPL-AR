@@ -8,7 +8,11 @@ Created on Fri Nov 23 23:27:49 2018
  
 import sqlite3
 from sqlite3 import Error
+import os 
  
+
+
+### Create Connection with SQL LITE DB ####
  
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -19,20 +23,28 @@ def create_connection(db_file):
         return conn
     except Error as e:
         print(e)
- 
     return None
+
+
+base_path = os.path.dirname(os.path.realpath(__file__))
+db_file = os.path.join(base_path, "db\AlmaanyArArFinal_NEW.db")
+conn = create_connection(db_file);
  
- 
-def select_ALL(conn):
-    cur = conn.cursor()
-    cur.execute("select word , root , meaning from WordsTable")
- 
-    rows = cur.fetchall()
- 
-    for row in rows:
-        print(row)
- 
-def select(conn,word):
+    
+
+
+
+### SQL LITE Requests
+
+
+root = ""
+definition = ""
+
+
+def select(word):
+    global root
+    global definition
+    global conn
     cur = conn.cursor()    
     request = '''
         SELECT WT.word, WT.root, WT.meaning
@@ -41,28 +53,26 @@ def select(conn,word):
     				AND
     			     K.searchwordkey = "'''+word+'''"
         '''
-
     cur.execute(request)
     rows = cur.fetchall()
     
-    
     for row in rows:
         print("\n")
-        for att in row:
-            for r in att.split("|"):
-                print(r);
         
+        root = row[1]; 
+        for r in row[2].split("|"):
+            definition += r+"\n";
  
-import os 
-def main():
-    base_path = os.path.dirname(os.path.realpath(__file__))
-    db_file = os.path.join(base_path, "apk\AlmaanyArArFinal_NEW.db")
-    conn = create_connection(db_file);
-    word = "اكل"
-    select(conn,word)
 
 
-main()
+def dicOffLine(word):
+    select(word)
+    dicOFFLine = {
+        'root'       : root ,            
+        'definition' : definition 
+    };
+    return dicOFFLine;
+
 
 
 
