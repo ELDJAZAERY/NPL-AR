@@ -37,14 +37,25 @@ conn = create_connection(db_file);
 ### SQL LITE Requests
 
 
-root = ""
-definition = ""
+roots = set()
+definition = []
+relativeWords = set()
+nearWords = []
+
 
 
 def select(word):
-    global root
-    global definition
     global conn
+    global definition
+    global relativeWords
+    global roots
+    
+    
+    definition = [];
+    roots = set();
+    relativeWords = set();
+    #nearWords = set();
+    
     cur = conn.cursor()    
     request = '''
         SELECT WT.word, WT.root, WT.meaning
@@ -56,24 +67,53 @@ def select(word):
     cur.execute(request)
     rows = cur.fetchall()
     
+    temp = ''
     for row in rows:
-        print("\n")
-        
-        root = row[1]; 
+        if(row[1]): roots.add(row[1]);
         for r in row[2].split("|"):
-            definition += r+"\n";
- 
+            if( (r.__contains__('(فعل)') or
+                 r.__contains__('(اسم)') or
+                 r.__contains__('(حرف)') or
+                 r.__contains__('(ضمير)') or
+                 r.__contains__('(حرف)') or
+                 r.__contains__('(حرف/اداة)') or
+                 r.__contains__('(فعل: ثلاثي لازم)') ) and temp != '' ):
+                
+                definition.append(temp)
+                temp = '';
+                
+            temp += r+'\n';
+            
+        definition.append(temp)
+        
+    selectRelativeWords()
+
+def selectRelativeWords():
+    global conn
+    global roots
+    global relativeWords
+
+    cur = conn.cursor()
+    print(roots)
+    for root in roots:
+        request = '''
+                select word from WordsTable where root = "'''+root+'''"
+        '''
+        cur.execute(request)
+        rows = cur.fetchall()
+    
+        for row in rows:
+            relativeWords.add(row[0])
 
 
 def dicOffLine(word):
     select(word)
     dicOFFLine = {
-        'root'       : root ,            
-        'definition' : definition 
+        'connexion'     : False,
+        'definitions'   : definition ,
+        'relativeWords' : relativeWords,
+        'nearWords'     : []
     };
     return dicOFFLine;
 
 
-
-
-    
