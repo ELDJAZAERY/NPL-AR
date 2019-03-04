@@ -9,7 +9,8 @@ Created on Fri Nov 23 23:27:49 2018
 import sqlite3
 from sqlite3 import Error
 import os 
- 
+import random
+
 
 
 ### Create Connection with SQL LITE DB ####
@@ -33,12 +34,35 @@ conn = create_connection(db_file);
     
 
 
+#### Random Generation ####
+
+def get_random_words(nb_words, hist_dict):
+    global conn
+
+    cur = conn.cursor()
+    request = 'SELECT word FROM WordsTable'
+    cur.execute(request)
+    rows    = cur.fetchall()
+
+    words = []
+
+    for i in range(nb_words):
+        index = random.randint(0, len(rows)-1)
+        while rows[index] in hist_dict:
+            index = random.randint(0, len(rows)-1)
+        words.append(rows[index])
+
+    return words
+
+
+
+
 
 ### SQL LITE Requests
 
 
 roots = set()
-definition = []
+definition = set()
 relativeWords = set()
 nearWords = []
 
@@ -51,7 +75,7 @@ def select(word):
     global roots
     
     
-    definition = [];
+    definition = set();
     roots = set();
     relativeWords = set();
     #nearWords = set();
@@ -79,14 +103,14 @@ def select(word):
                  r.__contains__('(حرف/اداة)') or
                  r.__contains__('(فعل: ثلاثي لازم)') ) and temp != '' ):
                 
-                definition.append(temp)
+                definition.add(temp)
                 temp = '';
                 
             temp += r+'\n';
             
-        definition.append(temp)
+        definition.add(temp)
         
-    selectRelativeWords()
+    #selectRelativeWords()
 
 def selectRelativeWords():
     global conn
@@ -94,7 +118,6 @@ def selectRelativeWords():
     global relativeWords
 
     cur = conn.cursor()
-    print(roots)
     for root in roots:
         request = '''
                 select word from WordsTable where root = "'''+root+'''"
@@ -111,7 +134,7 @@ def dicOffLine(word):
     dicOFFLine = {
         'connexion'     : False,
         'definitions'   : definition ,
-        'relativeWords' : relativeWords,
+#        'relativeWords' : relativeWords,
         'nearWords'     : []
     };
     return dicOFFLine;

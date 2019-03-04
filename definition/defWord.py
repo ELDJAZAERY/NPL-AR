@@ -14,8 +14,6 @@ from bs4 import BeautifulSoup
 ### --------- OnLine Part ----------- ### 
 
 url = 'https://www.almaany.com/ar/dict/ar-ar/';
-path = 'XMLDIC/';
-
 
 
 ### ----- Check Connection internet ------- ###
@@ -29,11 +27,21 @@ def internet():
     return False
 
 
-
+### Normalization
+import tashaphyne.arabic_const as arabconst
+import re
+def Normalisation(text):
+   text = arabconst.HARAKAT_PAT.sub('', text)
+   text = re.sub(r'[%s]' % arabconst.TATWEEL,'', text)
+   text = arabconst.ALEFAT_PAT.sub(arabconst.ALEF, text)
+   text = arabconst.LAMALEFAT_PAT.sub(u'%s%s' % (arabconst.LAM, arabconst.ALEF), text)
+   return text;
 
 ### --------- < On Line Traitement >
 def definition(word):
+    print('avant ----------')
     r = requests.get(url+word)
+    print('apreeeees ----------')
 
     # index of begin and end (def) 
     indexDMR = r.text.find('''<ol class="meaning-results">''');
@@ -60,17 +68,17 @@ def definition(word):
     text = '\n'.join(chunk for chunk in chunks if chunk)
     lines = text.splitlines();
     
-    definitions = []
+    definitions = set()
     temp = ''
     
     for line in lines:
         #if(len(line) > 200 ): continue;
         if( (line.__contains__('(فعل)') or line.__contains__('(اسم)') or line.__contains__('(حرف/اداة)')) and temp != '' ):
-            definitions.append(temp)
+            definitions.add(temp)
             temp = '';
         temp += line+'\n';
         
-    definitions.append(temp)
+    definitions.add(temp)
     
     return definitions;
 
@@ -133,13 +141,13 @@ def nearWords(word):
 
 def dicOnLine(word):
     definitiononline = definition(word)
-    RWs = relativeWords(word)
-    NWs = nearWords(word)
+    #RWs = relativeWords(word)
+    #NWs = nearWords(word)
     dicOnLine = {
         'connexion'     : True,
         'definitions'   : definitiononline ,
-        'relativeWords' : RWs,
-        'nearWords'     : NWs
+#        'relativeWords' : RWs,
+#        'nearWords'     : NWs
     };
     return dicOnLine;
 
@@ -149,7 +157,7 @@ def dicOnLine(word):
 
 
 ### --------- <OFF Line Traitement>
-import sqlLite
+from definition import sqlLite
 def dicOffLine(word):
     return sqlLite.dicOffLine(word);
 
@@ -160,16 +168,18 @@ def dicOffLine(word):
 
 ### ------------ main Function ---------- ### 
 
-def Dict(word , OFFlineForced):
+
+def Dict(word , OnLine):
     
-    if(OFFlineForced): return dicOffLine(word);
+    word = Normalisation(word)
+
+    if(not OnLine): return dicOffLine(word);
     
     internet_enable = internet();
-    if(not internet_enable):
+    if(internet_enable):
         return dicOnLine(word);
     else:
         return dicOffLine(word);
     
-
 ### ------------ main Function ---------- ### 
 

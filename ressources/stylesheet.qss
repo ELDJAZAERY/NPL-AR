@@ -1,0 +1,379 @@
+/*
+C O L O R S
+color_green:      #338055
+color_gray_dark:  #7F8080
+color_gray_light: #B3B3B3
+color_pink:       #D38087
+*/
+/* W I N D O W */
+QMainWindow {
+	background-color: white;
+	padding: 10px 20px;
+}
+
+/* M E N U */
+.QRadioButton#menu_item::indicator {
+    width: 0px;
+    height: 0px;
+}
+
+.QRadioButton#menu_item {
+	font-family: 'Cairo Semibold';
+	font-size: 18px; 
+	color: #B3B3B3;/* #888;*/
+	text-align: center;
+	padding: 10px 20px;
+	border-bottom: 2px solid transparent;
+}
+
+.QRadioButton#menu_item:hover {
+	border-bottom-color: #DDD;
+}
+
+.QRadioButton#menu_item:checked {
+	color: #338055;
+	border-bottom-color: #338055;
+}
+
+/* H E A D E R   I T E M S */
+.QCheckBox#on_off_line_indicator::indicator {
+	margin-top: 12px;
+	background-image: url(ressources/imgs/checkbox_unchecked.png);
+	height: 20px;
+	width: 32px;
+}
+.QCheckBox#on_off_line_indicator::indicator:checked {
+	background-image: url(ressources/imgs/checkbox_checked.png);
+}
+.QCheckBox#on_off_line_indicator {
+	margin-right: 10px;
+	height: 22px;
+	width: 32px;
+}
+.QLabel#on_off_line_label {
+	font-family: 'Cairo Semibold';
+	font-size: 12px;
+	color: #338055;
+	width: 100px;
+	margin-top: -6px;
+	padding: 0 10px;
+}
+
+/* SETTINGS */
+.QPushButton#settings_btn {
+	height: 22px;
+	width:  22px;
+	background-image: url(ressources/imgs/settings_gray.png);
+	border: none;
+}
+.QPushButton#settings_btn:hover {
+	background-image: url(ressources/imgs/settings_green.png);
+}
+
+/* HELP */
+.QPushButton#about_btn {
+	height: 22px;
+	width:  22px;
+	background-image: url(ressources/imgs/about_gray.png);
+	border: none;
+	margin-right: 11px;
+}
+.QPushButton#about_btn:hover {
+	background-image: url(ressources/imgs/about_green.png);
+}
+
+/* W E L C O M E   S C R E E N */
+.QLabel#welcome_img {
+	margin: 60px 0 20px 0;
+}
+.QLabel#welcome_label {
+	font-family: 'Dubai';
+	font-size: 16px;
+	color: #338055;
+}
+
+
+/* S E A R C H   B O X */
+.QLineEdit#search_box {
+	font-family: 'Dubai';
+	font-size: 14px; 
+	color: #B3B3B3; /*#888;*/
+	/* text-align: center; */
+	padding: 10px 20px;
+	padding-top: 0;
+	border: none;
+	border-bottom: 1px solid #B3B3B3;/*#888;*/
+	outline: none;
+	width: 250px;
+	/* direction: rtl; */
+}
+
+#error_label {
+	font-family: 'Dubai';
+	font-size: 18px; 
+	color: #338055;
+	margin: 50px;
+}
+
+.QLineEdit#search_box:hover {
+	border-bottom: 1px solid #B3B3B3;/*#CCC;*/
+}
+
+.QLineEdit#search_box:focus {
+	color: #338055;
+	border-bottom: 1px solid #338055;
+}
+
+/* D E F I N I T O N */
+#def_mark {
+	font-family: 'Dubai';
+	font-size: 12px;
+	/* background-color: yellow; /*red;*/
+	color: white;
+	border-radius: 4px;
+	padding: 0px 4px;
+	margin-top: 20px;
+	margin-right: 16px;
+}
+
+#def_word {
+	font-family: 'Cairo Semibold';
+	font-size: 21px;
+	color: #338055;
+	padding-left: 12px;
+}
+
+#ex_label {
+	font-family: 'Cairo Semibold';
+	font-size: 21px;
+	color: #338055;
+	padding: 12px;
+	margin-top: 47px;
+}
+
+/* D E F I N I T I O N   &   E X A M P L E S */
+
+#def_content {
+	font-family: 'Dubai';
+	font-size: 16px;
+	padding-left: 12px;
+}
+
+#era_name {
+	font-family: 'Cairo Semibold';
+	font-size: 18px;
+	color: #338055;
+	padding: 4px;
+	border-bottom: 1px solid #B3B3B3;
+}
+
+#example {
+	font-family: 'Dubai';
+	font-size: 16px;
+	padding: 0px 4px;
+	padding-top: 3px;
+}
+#examples:first {
+	background-color: red;
+}
+
+/* E X P L O R E */
+/* Files Tree */
+.QTreeView#files_tree {
+	border: none;
+	/* border-left: 1px solid #B3B3B3; */
+	font-family: 'Dubai';
+	font-size: 14px;
+}
+.QTreeView#files_tree {}
+
+/* File Viewer */
+#meta_label {
+	font-family: 'Dubai';
+	font-size: 14px;
+}
+#file_viewer {
+	font-family: 'Dubai';
+	font-size: 14px; 
+	outline: none;
+	border: none;
+	border-top: 1px solid #B3B3B3;
+/* 	#7F8080*/
+}
+
+/* S C R O L L A R E A */
+QScrollArea {
+	border: none;
+}
+#scroll_container {
+	background-color: #FFF;
+}
+
+/* S C R O L L B A R */
+QScrollBar:vertical {
+	background-color: #FFF;
+	width: 16px;
+	margin: 16px 2px 16px 2px;
+}
+QScrollBar::handle:vertical {
+	background-color: #B3B3B3;	/*#7F8080*/
+	border-radius: 2px;
+	width: 12px;
+	margin: 2px ;
+	min-height: 20px;
+	
+}
+QScrollBar::handle:vertical:hover {
+	background-color: #338055;
+}
+
+QScrollBar::add-line:vertical {
+	margin: 2px 0px 2px 0px;
+	background-image: url(ressources/imgs/arrow_down_gray.png);
+	height: 18px;
+	width:  16px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+QScrollBar::add-line:vertical:hover {
+	background-image: url(ressources/imgs/arrow_down_green.png);
+}
+QScrollBar::sub-line:vertical {
+	margin: 2px 0px 2px 0px;
+	background-image: url(ressources/imgs/arrow_up_gray.png);
+	height: 18px;
+	width:  16px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical:hover {
+	background-image: url(ressources/imgs/arrow_up_green.png);
+}
+QScrollBar:up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	backgroud: none;
+}
+
+/* E D I T   P A G E */
+
+#words_list {
+	border: none;
+	border-left: 1px solid #B3B3B3;
+	font-family: 'Dubai';
+	font-size: 16px;
+	line-height: 21px;
+	margin-left: 12px;
+}
+
+/* P O P U P   W I N D O W */
+#settings_popup, #about_popup, #auto_entry_popup {
+	background-color: #FFF;
+}
+
+/* B U T T O N S */
+#primary_button {
+	padding: 4px 8px;
+	font-family: 'Cairo Semibold';
+	font-size: 16px;
+	background-color: #338055;
+	color: #FFF;
+	border: none;
+	border-radius: 2px;
+}
+#primary_button:hover {
+	background-color: #439065;
+}
+#primary_button:pressed {
+	background-color: #136035;
+}
+
+#secondary_button {
+	padding: 4px 8px;
+	font-family: 'Cairo Semibold';
+	font-size: 12px;
+	background-color: #B3B3B3;
+	color: #FFF;
+	border: none;
+	border-radius: 2px;
+}
+#secondary_button:hover {
+	background-color: #338055;
+	color: #FFF;
+}
+#secondary_button:pressed {
+	background-color: #136035;
+}
+
+/* E D I T   E N T R Y */
+#edit_page .QComboBox {
+	padding: 6px 12px;
+	font-family: 'Cairo Semibold';
+	font-size: 12px;
+	border: 1px solid #338055;
+	border-radius: 2px;
+	background-color: #FFF;
+	color: #338055;
+	outline: none;
+}
+#edit_page .QComboBox::down-arrow {
+	width: 24px;
+	border: none;
+	outline: none;
+	background-color: #FFF;
+	background-image: url(ressources/imgs/arrow_down_green.png);
+	background-position: center;
+	background-repeat: no-repeat;
+}
+/*
+#edit_page .QComboBox::drop-down {
+	font-family: 'Dubai';
+	font-size: 12px;
+	padding: 4px;
+}
+#edit_page .QComboBox::QAbstractItemView {
+	font-family: 'Dubai';
+	font-size: 12px;
+	padding: 4px;
+}
+*/
+#edit_page .QComboBox::QAbstractItemView::item {
+	font-family: 'Dubai';
+	font-size: 12px;
+	padding: 8px 4px;
+}
+
+#edit_page .QCheckBox {
+	padding: 4px 8px;
+	font-family: 'Dubai';
+	font-size: 16px;
+}
+
+/* SEARCH BUTTON */
+#search_btn {
+	width: 29px;
+	height: 29px;
+	background-image: url(ressources/imgs/search_gray.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	border: 1px solid #DDD;
+	border-radius: 2px;
+}
+#search_btn:hover {
+	background-image: url(ressources/imgs/search_green.png);
+	background-color: #DDD;
+}
+#search_btn:pressed {
+	background-color: #CCC;
+	border-color: #CCC;
+}
+
+/*
+color_green:      #338055
+color_gray_dark:  #7F8080
+color_gray_light: #B3B3B3
+*/
+
+#popup_text {
+	font-family: 'Segoe UI';
+	font-size: 14px;
+	line-height: 18px
+}

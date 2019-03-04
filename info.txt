@@ -1,0 +1,37 @@
+
+CORPUS
+======
+Periode Islamique: Al Aqra3...xml -> vide
+Periode Djahilia:  Amima bnt.. & Drid bn.. & Dhouaib bn.. -> vides
+Periode Abbasi:    Abou Alalaa.. -> vide
+Periode Otmani:    Amir.. -> vide
++ corpus incomplet.
+
+
+EXEMPLES
+====================
+
+controller.get_examples(word, era , mode) 
+	retourne une liste contiens un example pour chaque type (chiir , nather , Quran ; Hadiith )
+
+mode in (Auto , Normalize , Brute) 
+
+Auto :
+si l'utilisateur donne word normalizé on recherche avec text normalizé
+sinon on recherche in text brute
+
+Normalize : text and Request Normalizés
+Brute 	  : text and Reauest Brute
+
+## A faire ##
+donner la main a l'utilisateur pour choisi le mode de recherche
+
+
+
+## A faire ##
+La fonction recherche.recherche_Examples() doit retourner N
+examples (le nombre peut etre defini comme parametre, on
+peut faire ca apres, il faut juste que ca marche maintenant)
+
+
+
